@@ -8,15 +8,16 @@ export default connect({
     head () {
       return [
         {
-          renderHead () {
-            return (<div>
-              <SmartCheckboxAll/>
-              <SmartDropButton/>
-            </div>)
+          renderHead: {
+            functional: true,
+            render () {
+              return (<div>
+                <SmartCheckboxAll/>
+                <SmartDropButton/>
+              </div>)
+            }
           },
-          render (h, {id}) {
-            return (<SmartCheckbox id={id}/>)
-          },
+          render: SmartCheckbox,
           key: 'operation'
         },
         {
