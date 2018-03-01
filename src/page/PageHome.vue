@@ -27,8 +27,8 @@ export default {
     HomeList: HomeView.SmartList
   },
   async mounted () {
-    await this.$store.dispatch('home/init')
-    this.$store.commit('home/draw')
+    await this.$store.dispatch('entities/home/init')
+    this.$store.commit('entities/home/draw')
   }
 }
 </script>

@@ -2,9 +2,9 @@ import DumpCheckbox from './DumpCheckbox.vue'
 import { connect } from 'vuex-connect'
 export default connect({
   actionsToEvents: {
-    'input': 'home/toggleAll'
+    'input': 'entities/home/toggleAll'
   },
   gettersToProps: {
-    'checked': 'home/HasCheckedAll'
+    'checked': 'entities/home/hasCheckedAll'
   }
 })('SideBarCheckbox', DumpCheckbox)

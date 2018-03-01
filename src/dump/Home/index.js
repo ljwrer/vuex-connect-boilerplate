@@ -4,7 +4,8 @@ import * as actions from './actions'
 import SmartTable from './view/SmartTable'
 import SmartList from './view/SmartList'
 import SmartChart from './view/SmartChart'
-import './index.scss'
+import Model from './HomeList'
+
 const store = {
   getters,
   mutations,
@@ -19,5 +20,6 @@ const view = {
 
 export {
   view,
-  store
+  store,
+  Model
 }

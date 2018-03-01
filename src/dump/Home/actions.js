@@ -2,19 +2,19 @@ import * as types from './mutation-types'
 import { sideBarStore } from '@/module/storage'
 const tableDataList = [
   {
-    id: 0,
+    id: 1,
     platform: 'pc',
     uv: 10000,
     pv: 20000
   },
   {
-    id: 1,
+    id: 2,
     platform: 'm站',
     uv: 8000,
     pv: 15000
   },
   {
-    id: 2,
+    id: 3,
     platform: 'android',
     uv: 30000,
     pv: 40000
@@ -36,27 +36,41 @@ const api = {
   }
 }
 
-export const init = async ({ commit }) => {
+export const init = async ({ dispatch }) => {
   const list = await api.getTableList()
   const cacheList = sideBarStore.getValue()
-  commit(types.init, list)
-  commit(types.sync, cacheList)
-}
-
-export const toggleItem = ({ commit, state }, id) => {
-  commit(types.toggleItem, id)
-  syncStore({state}, id)
-}
-
-export const toggleAll = ({ commit, state }) => {
-  commit(types.toggleAll)
-  state.allIds.forEach(id => {
-    syncStore({state}, id)
+  dispatch('create', {
+    data: list
+  })
+  cacheList.forEach(id => {
+    dispatch('update', {
+      id,
+      checked: true
+    })
   })
 }
 
-const syncStore = function ({ state }, id) {
-  const { checked } = state.byId[id]
+export const toggleItem = ({ getters, dispatch }, id) => {
+  dispatch('update', {
+    id,
+    checked: !getters.hasChecked(id)
+  })
+  syncStore({getters}, id)
+}
+
+export const toggleAll = ({ getters, dispatch }) => {
+  const checked = !getters.hasCheckedAll
+  dispatch('update', {
+    where: () => true,
+    data: { checked }
+  })
+  getters.all().forEach(({id}) => {
+    syncStore({getters}, id)
+  })
+}
+
+const syncStore = function ({ getters }, id) {
+  const checked = getters.hasChecked(id)
   if (checked) {
     sideBarStore.add(id)
   } else {
@@ -64,8 +78,11 @@ const syncStore = function ({ state }, id) {
   }
 }
 
-export const dropAll = ({ commit }) => {
-  commit(types.dropAll)
+export const dropAll = ({ dispatch }) => {
+  dispatch('update', {
+    where: () => true,
+    data: { checked: false }
+  })
   sideBarStore.clear()
 }
 

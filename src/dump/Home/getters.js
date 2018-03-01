@@ -1,10 +1,16 @@
-import {getCheckedAll} from './select'
-export const hasChecked = state => id => !!state.byId[id].checked
-export const HasCheckedAll = state => getCheckedAll(state)
-export const allDataList = state => state.allIds.map(id => state.byId[id])
-export const checkedId = state => state.allIds.filter(id => state.byId[id].checked)
-export const checkedDataList = (state, getters) => getters.checkedId.map(id => state.byId[id])
-export const checkedPlatformList = (state, getters) => getters.checkedDataList.map(item => item.platform)
+import _ from 'lodash'
+export const hasChecked = (state, getters) => id => !!getters.find(id).checked
+export const hasCheckedAll = (state, getters) => {
+  const list = getters.all()
+  if (!_.isEmpty(list)) {
+    return list.every(({checked}) => checked)
+  }
+  return false
+}
+export const allDataList = (state, getters) => getters.all()
+export const checkedId = (state, getters) => getters.checkedDataList.map(({id}) => id)
+export const checkedDataList = (state, getters) => getters.query().where('checked', true).get()
+export const checkedPlatformList = (state, getters) => getters.checkedDataList.map(({platform}) => platform)
 export const drawIndex = state => state.drawIndex
 export const chartData = (state, getters) => {
   const legend = ['pv', 'uv']

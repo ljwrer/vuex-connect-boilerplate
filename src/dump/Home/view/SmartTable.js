@@ -36,6 +36,6 @@ export default connect({
     }
   },
   gettersToProps: {
-    'body': 'home/allDataList'
+    'body': 'entities/home/allDataList'
   }
 })('SmartTable', DumpTable)

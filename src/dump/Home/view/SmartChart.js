@@ -2,7 +2,7 @@ import DumpChart from './DumpChart'
 import { connect } from 'vuex-connect'
 export default connect({
   gettersToProps: {
-    data: 'home/chartData',
-    index: 'home/drawIndex'
+    data: 'entities/home/chartData',
+    index: 'entities/home/drawIndex'
   }
 })('SmartChart', DumpChart)

@@ -2,9 +2,9 @@ import DumpList from './DumpList'
 import { connect } from 'vuex-connect'
 export default connect({
   actionsToEvents: {
-    draw: 'home/draw'
+    draw: 'entities/home/draw'
   },
   gettersToProps: {
-    data: 'home/checkedPlatformList'
+    data: 'entities/home/checkedPlatformList'
   }
 })('SmartList', DumpList)
